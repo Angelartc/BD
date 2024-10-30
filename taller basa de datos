@@ -1,0 +1,91 @@
+SELECT pro_tipo, COUNT(*) AS total_productos, AVG(pro_costo) AS costo_promedio
+FROM productos
+GROUP BY pro_tipo;
+
+SELECT cli_nombre, SUM(ser_costo) AS total_gasto
+FROM servicios
+GROUP BY cli_nombre;
+
+SELECT cli_nombre, cli_id, COUNT(mas_id) AS numero_mascotas
+FROM clientes, mascotas
+WHERE clientes.cli_id = mascotas.cli_id
+GROUP BY cli_nombre;
+
+SELECT pro_tipo, SUM(pro_costo) AS costo_total, COUNT(*) AS total_productos
+FROM productos
+GROUP BY pro_tipo;
+
+SELECT mas_tipo, COUNT(*) AS cantidad_mascotas, AVG(mas_peso) AS peso_promedio
+FROM mascotas
+GROUP BY mas_tipo;
+
+SELECT emp_nombre, ser_nombre, COUNT(*) AS total_servicios
+FROM servicios, empleados
+WHERE servicios.emp_id = empleados.emp_id
+GROUP BY emp_nombre, ser_nombre;
+
+SELECT f.fact_id, c.cli_nombre, SUM(ser_costo) AS costo_total
+FROM factura f, cliente c, servicios s
+WHERE f.cli_id = c.cli_id
+GROUP BY f.fact_id;
+
+SELECT fv.fact_id, p.pro_nombre
+FROM factura_venta fv, productos p
+WHERE fv.pro_id = p.pro_id;
+
+SELECT mas_tipo, AVG(mas_edad) AS promedio_edad
+FROM mascotas
+GROUP BY mas_tipo;
+
+SELECT f.fact_id, COUNT(fv.pro_id) AS productos_vendidos
+FROM factura f, factura_venta fv
+WHERE f.fact_id = fv.fact_id
+GROUP BY f.fact_id;
+
+SELECT cli_nombre, COUNT(*) AS total_servicios
+FROM servicios
+GROUP BY cli_nombre;
+
+SELECT ser_nombre, SUM(ser_costo) AS ganancias_totales
+FROM servicios
+GROUP BY ser_nombre;
+
+SELECT emp_nombre, COUNT(*) AS total_ventas
+FROM empleados
+WHERE ser_id = 'V'
+GROUP BY emp_nombre;
+
+SELECT cli_nombre, COUNT(mas_id) AS numero_mascotas
+FROM clientes, mascotas
+WHERE clientes.cli_id = mascotas.cli_id
+GROUP BY cli_nombre
+HAVING COUNT(mas_id) > 1;
+
+SELECT pro_tipo, SUM(pro_unid) AS total_disponibles
+FROM productos
+GROUP BY pro_tipo;
+
+SELECT mas_raza, AVG(mas_peso) AS peso_promedio
+FROM mascotas
+GROUP BY mas_raza;
+SELECT m.mas_nombre, s.ser_nombre, COUNT(*) AS frecuencia
+FROM mascotas m, servicios s
+WHERE m.mas_id = s.mas_id
+GROUP BY m.mas_nombre, s.ser_nombre
+ORDER BY frecuencia DESC;
+
+SELECT e.emp_id, e.emp_nombre, COUNT(DISTINCT c.cli_id) AS clientes_atendidos
+FROM empleados e, factura f, cliente c
+WHERE f.emp_id = e.emp_id AND f.cli_id = c.cli_id
+GROUP BY e.emp_id, e.emp_nombre;
+
+SELECT f.fact_id, fv.pro_id, p.pro_costo, fv.cantidad
+FROM factura f, factura_venta fv, productos p
+WHERE f.fact_id = fv.fact_id AND fv.pro_id = p.pro_id;
+
+SELECT c.cli_nombre, e.emp_nombre, f.fact_id
+FROM cliente c, factura f, empleados e
+WHERE f.cli_id = c.cli_id AND f.emp_id = e.emp_id;
+
+
+
